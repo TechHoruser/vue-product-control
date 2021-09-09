@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
+import Home from '../components/Home.vue';
+import Alerts from '../components/Alerts.vue';
+import MedicineList from '../components/MedicineList.vue';
+import Config from '../components/Config.vue';
+import RegisterUse from '../components/RegisterUse.vue';
 
 Vue.use(VueRouter);
 
@@ -11,12 +15,24 @@ const routes: Array<RouteConfig> = [
     component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/medicine-list',
+    name: 'MedicineList',
+    component: MedicineList,
+  },
+  {
+    path: '/alerts',
+    name: 'Alerts',
+    component: Alerts,
+  },
+  {
+    path: '/config',
+    name: 'Config',
+    component: Config,
+  },
+  {
+    path: '/register-use',
+    name: 'RegisterUse',
+    component: RegisterUse,
   },
 ];
 

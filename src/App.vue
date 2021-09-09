@@ -1,12 +1,36 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import { Component, Vue } from 'vue-property-decorator';
+
+// MATERIAL IMPORTS
+import VueMaterial from 'vue-material';
+import 'vue-material/dist/vue-material.min.css';
+import 'vue-material/dist/theme/default.css';
+
+import Alerts from './components/Alerts.vue';
+import Home from './components/Home.vue';
+import Config from './components/Config.vue';
+import RegisterUse from './components/RegisterUse.vue';
+import MedicineList from './components/MedicineList.vue';
+
+Vue.use(VueMaterial);
+
+@Component({
+  components: {
+    Home,
+    Alerts,
+    Config,
+    RegisterUse,
+    MedicineList,
+  },
+})
+export default class App extends Vue {}
+</script>
 
 <style lang="scss">
 #app {
@@ -15,6 +39,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding: 2rem;
 }
 
 #nav {
