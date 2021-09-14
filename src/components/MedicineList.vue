@@ -25,7 +25,7 @@
       </md-table-row>
     </md-table>
 
-    <CreateNewMedicine :show-dialog="showDialog"/>
+    <CreateNewMedicine :show-dialog="showDialog" v-on:modifyShowDialog="modifyShowDialog"/>
   </div>
 </template>
 
@@ -35,6 +35,7 @@ import { namespace } from '@/store/medicine';
 import { Medicine } from '@/entities/Medicine';
 import { MedicineState } from '@/store/medicine/types';
 import CreateNewMedicine from '@/components/CreateNewMedicine.vue';
+import { MedicineActions } from '@/store/medicine/actions';
 
 const toLower = (text: string) => text.toString().toLowerCase();
 
@@ -51,17 +52,21 @@ export default class MedicineList extends Vue {
   showDialog = false;
 
   mounted(): void {
-    this.$store.dispatch(`${namespace}/fetchData`);
+    this.$store.dispatch(`${namespace}/${MedicineActions.FETCH_DATA}`);
   }
 
-  searchOnTable = (): void => {
+  searchOnTable(): void {
     this.searched = [];
-    this.medicineState.medicines.map((medicineToFilter) => {
+
+    this.medicineState.medicines.forEach((medicineToFilter) => {
       if (toLower(medicineToFilter.name).includes(toLower(this.search))) {
         this.searched.push(medicineToFilter);
       }
-      return medicineToFilter;
     });
+  }
+
+  modifyShowDialog(newValue: boolean): void {
+    this.showDialog = newValue;
   }
 }
 </script>

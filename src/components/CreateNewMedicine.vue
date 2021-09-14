@@ -27,6 +27,7 @@ import { Prop, Vue } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import { MedicineState } from '@/store/medicine/types';
 import { namespace } from '@/store/medicine';
+import { MedicineMutations } from '@/store/medicine/mutations';
 
 const toLower = (text: string) => text.toString().toLowerCase();
 
@@ -46,21 +47,18 @@ export default class CreateNewMedicine extends Vue {
     amount: 1,
   };
 
-  createNewMedicine = (): void => {
+  createNewMedicine(): void {
     let newMedicine = true;
-    this.medicineState.medicines.map((medicine) => {
+    this.medicineState.medicines.forEach((medicine) => {
       if (toLower(this.newMedicine.name) === toLower(medicine.name)) {
-        medicine.stock.map((stock) => {
+        newMedicine = false;
+
+        medicine.stock.forEach((stock) => {
           if (sameDay(stock.expiredDate, this.newMedicine.expiredDate)) {
-            // eslint-disable-next-line no-param-reassign
             stock.amount += this.newMedicine.amount;
           }
-          return stock;
         });
-
-        newMedicine = false;
       }
-      return medicine;
     });
 
     if (newMedicine) {
@@ -73,8 +71,8 @@ export default class CreateNewMedicine extends Vue {
         }],
       });
     }
-    this.$store.commit(`${namespace}/medicinesLoaded`, this.medicineState.medicines);
-    this.showDialog = false;
+    this.$store.commit(`${namespace}/${MedicineMutations.LOADED}`, this.medicineState.medicines);
+    this.$emit('modifyShowDialog', false);
   }
 }
 </script>
