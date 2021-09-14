@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="js">
 import { Component, Vue } from 'vue-property-decorator';
 
 // MATERIAL IMPORTS
@@ -18,7 +18,41 @@ import Config from './components/Config.vue';
 import RegisterUse from './components/RegisterUse.vue';
 import MedicineList from './components/MedicineList.vue';
 
+export const dateFormat = 'dd/MM/yyyy';
+
 Vue.use(VueMaterial);
+Vue.material = {
+  ...Vue.material,
+  locale: {
+    ...Vue.material.locale,
+    dateFormat,
+
+    firstDayOfAWeek: 1,
+
+    days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    shortDays: ['Dom', 'Lun', 'Mar', 'Mir', 'Jue', 'Vie', 'Sab'],
+    shortedDays: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+    months: [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ],
+    shortMonths: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    shorterMonths: ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+
+    startYear: 1900,
+    endYear: 2099,
+  },
+};
 
 @Component({
   components: {

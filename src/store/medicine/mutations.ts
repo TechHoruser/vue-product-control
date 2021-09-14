@@ -1,10 +1,10 @@
 import { MutationTree } from 'vuex';
-import { Medicine } from '@/entities/Medicine';
-import { MedicineState } from '@/store/medicine/types';
+import { LocalStorageMedicines, MedicineState, ProcessMedicines } from '@/store/medicine/types';
 
 const mutations: MutationTree<MedicineState> = {
-  medicinesLoaded(state, payload: Medicine[]) {
+  medicinesLoaded(state, payload: ProcessMedicines[]) {
     state.medicines = payload;
+    window.localStorage.setItem(LocalStorageMedicines, JSON.stringify(payload));
   },
 };
 

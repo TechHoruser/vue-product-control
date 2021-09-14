@@ -1,7 +1,9 @@
-import { Moment } from 'moment';
+interface Stock {
+  expiredDate: Date,
+  amount: number,
+}
 
 export interface Medicine {
-  name: string;
-  expiredDate: Moment;
-  amount: number;
+  name: string,
+  stock: Stock[],
 }

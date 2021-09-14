@@ -5,7 +5,7 @@ import { RootState } from '@/store/types';
 const LocalStorageKey = 'APPLICATION-CONTROL-MEDICINES';
 
 const actions: ActionTree<MedicineState, RootState> = {
-  fetchData({ commit }): any {
+  fetchData() {
     window.localStorage.getItem(LocalStorageKey);
   },
 };
