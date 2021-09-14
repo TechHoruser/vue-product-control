@@ -31,11 +31,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { namespace } from '@/store/medicine';
 import { Medicine } from '@/entities/Medicine';
-import { MedicineState } from '@/store/medicine/types';
+import { MedicineState, namespace, ProcessMedicine } from '@/store/medicine/types';
 import CreateNewMedicine from '@/components/CreateNewMedicine.vue';
 import { MedicineActions } from '@/store/medicine/actions';
+import { MedicineGetters } from '@/store/medicine/getters';
 
 const toLower = (text: string) => text.toString().toLowerCase();
 
@@ -43,22 +43,22 @@ const toLower = (text: string) => text.toString().toLowerCase();
   components: { CreateNewMedicine },
 })
 export default class MedicineList extends Vue {
-  medicineState: MedicineState = this.$store.state.medicine;
+  allMedicines: ProcessMedicine[] = [];
 
   search = '';
 
-  searched: Medicine[] = this.medicineState.medicines;
+  searched: Medicine[] = [];
 
   showDialog = false;
 
-  mounted(): void {
-    this.$store.dispatch(`${namespace}/${MedicineActions.FETCH_DATA}`);
+  async mounted(): Promise<void> {
+    await this.$store.dispatch(`${namespace}/${MedicineActions.FETCH_DATA}`);
+    this.allMedicines = this.$store.getters[`${namespace}/${MedicineGetters.GET_PROCESS_ALL}`];
   }
 
   searchOnTable(): void {
     this.searched = [];
-
-    this.medicineState.medicines.forEach((medicineToFilter) => {
+    this.allMedicines.forEach((medicineToFilter) => {
       if (toLower(medicineToFilter.name).includes(toLower(this.search))) {
         this.searched.push(medicineToFilter);
       }
@@ -70,9 +70,3 @@ export default class MedicineList extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-  #create-dialog .md-dialog-container {
-    padding: 3em;
-  }
-</style>

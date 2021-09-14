@@ -1,20 +1,31 @@
 import { GetterTree } from 'vuex';
-import { MedicineState } from '@/store/medicine/types';
+import { MedicineState, ProcessMedicine } from '@/store/medicine/types';
 import { RootState } from '@/store/types';
 import { Medicine } from '@/entities/Medicine';
 
+export const enum MedicineGetters{
+  GET_PROCESS_ALL = 'all',
+  GET_ALL = 'all',
+}
+
 const getters: GetterTree<MedicineState, RootState> = {
-  all(state: MedicineState): Medicine[] {
-    return state.medicines.map((medicine) => {
-      let minExpiredDate = medicine.stock[0].expiredDate;
-      // eslint-disable-next-line no-restricted-syntax
-      for (const stock of medicine.stock) {
-        if (stock.expiredDate < minExpiredDate) {
-          minExpiredDate = stock.expiredDate;
+  [MedicineGetters.GET_PROCESS_ALL](state: MedicineState): ProcessMedicine[] {
+    const processMedicines: ProcessMedicine[] = [];
+    state.medicines.forEach((medicine) => {
+      const processMedicine: ProcessMedicine = {
+        ...medicine,
+        minExpiredDate: medicine.stock[0].expiredDate,
+      };
+      medicine.stock.forEach((stock) => {
+        if (stock.expiredDate < processMedicine.minExpiredDate) {
+          processMedicine.minExpiredDate = stock.expiredDate;
         }
-      }
-      return medicine;
+      });
     });
+    return processMedicines;
+  },
+  [MedicineGetters.GET_ALL](state: MedicineState): Medicine[] {
+    return state.medicines;
   },
 };
 

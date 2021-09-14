@@ -9,14 +9,14 @@ const state: MedicineState = {
   medicines: JSON.parse(window.localStorage.getItem(LocalStorageMedicines) ?? '[]'),
 };
 
-export const namespace = 'medicine';
-
 const namespaced = true;
 
-export const medicine: Module<MedicineState, RootState> = {
+const medicine: Module<MedicineState, RootState> = {
   namespaced,
   state,
   getters,
   actions,
   mutations,
 };
+
+export default medicine;

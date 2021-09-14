@@ -7,7 +7,7 @@
       <md-input v-model="newMedicine.name"></md-input>
     </md-field>
 
-    <md-datepicker v-model="newMedicine.expiredDate" dataformatas="DD-MM-yyyy">
+    <md-datepicker v-model="newMedicine.expiredDate">
       <label>Fecha de caducidad</label>
     </md-datepicker>
 
@@ -25,9 +25,10 @@
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator';
 import Component from 'vue-class-component';
-import { MedicineState } from '@/store/medicine/types';
-import { namespace } from '@/store/medicine';
+import { namespace, ProcessMedicine } from '@/store/medicine/types';
 import { MedicineMutations } from '@/store/medicine/mutations';
+import { MedicineGetters } from '@/store/medicine/getters';
+import { Medicine } from '@/entities/Medicine';
 
 const toLower = (text: string) => text.toString().toLowerCase();
 
@@ -39,17 +40,16 @@ const sameDay = (d1: Date, d2: Date) => d1.getFullYear() === d2.getFullYear()
 export default class CreateNewMedicine extends Vue {
   @Prop() showDialog = false;
 
-  medicineState: MedicineState = this.$store.state.medicine;
-
   newMedicine = {
     name: '',
     expiredDate: new Date(),
     amount: 1,
   };
 
-  createNewMedicine(): void {
+  createNewMedicine = (): void => {
     let newMedicine = true;
-    this.medicineState.medicines.forEach((medicine) => {
+    const allMedicines = this.$store.getters[`${namespace}/${MedicineGetters.GET_ALL}`];
+    allMedicines.forEach((medicine: Medicine) => {
       if (toLower(this.newMedicine.name) === toLower(medicine.name)) {
         newMedicine = false;
 
@@ -57,12 +57,12 @@ export default class CreateNewMedicine extends Vue {
           if (sameDay(stock.expiredDate, this.newMedicine.expiredDate)) {
             stock.amount += this.newMedicine.amount;
           }
-        });
+        }, this);
       }
-    });
+    }, this);
 
     if (newMedicine) {
-      this.medicineState.medicines.push({
+      allMedicines.push({
         name: this.newMedicine.name,
         minExpiredDate: this.newMedicine.expiredDate,
         stock: [{
@@ -71,8 +71,14 @@ export default class CreateNewMedicine extends Vue {
         }],
       });
     }
-    this.$store.commit(`${namespace}/${MedicineMutations.LOADED}`, this.medicineState.medicines);
+    this.$store.commit(`${namespace}/${MedicineMutations.LOADED}`, allMedicines);
     this.$emit('modifyShowDialog', false);
   }
 }
 </script>
+
+<style lang="scss">
+#create-dialog .md-dialog-container {
+  padding: 3em;
+}
+</style>

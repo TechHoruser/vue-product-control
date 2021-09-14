@@ -1,8 +1,13 @@
 import { ActionTree } from 'vuex';
-import { MedicineState } from '@/store/medicine/types';
+import {
+  LocalStorageMedicines,
+  MedicineSavedInStorage,
+  MedicineState,
+  namespace, ProcessMedicine,
+} from '@/store/medicine/types';
+import { MedicineMutations } from '@/store/medicine/mutations';
 import { RootState } from '@/store/types';
-
-const LocalStorageKey = 'APPLICATION-CONTROL-MEDICINES';
+import { Medicine } from '@/entities/Medicine';
 
 export enum MedicineActions {
   FETCH_DATA = 'fetchData',
@@ -10,7 +15,24 @@ export enum MedicineActions {
 
 const actions: ActionTree<MedicineState, RootState> = {
   [MedicineActions.FETCH_DATA]() {
-    window.localStorage.getItem(LocalStorageKey);
+    const parsedData: Medicine[] = [];
+    const savedData: MedicineSavedInStorage[] = JSON.parse(window.localStorage.getItem(LocalStorageMedicines) ?? '[]');
+    savedData.forEach((savedMedicine) => {
+      const medicine: Medicine = {
+        name: savedMedicine.name,
+        stock: [],
+      };
+      savedMedicine.stock.forEach((savedStock) => {
+        medicine.stock.push({
+          expiredDate: new Date(savedStock.expiredDate),
+          amount: savedStock.amount,
+        });
+      });
+    });
+    this.commit(
+      `${namespace}/${MedicineMutations.LOADED}`,
+      parsedData,
+    );
   },
 };
 

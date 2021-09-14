@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
-import { medicine } from './medicine/index';
+import medicine from './medicine/index';
 import { RootState } from '@/store/types';
 
 Vue.use(Vuex);
