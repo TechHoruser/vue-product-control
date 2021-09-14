@@ -13,7 +13,7 @@
 
     <md-field>
       <label>Cantidad</label>
-      <md-input v-model="newMedicine.amount"></md-input>
+      <md-input v-model.number="newMedicine.amount" type="number"></md-input>
     </md-field>
 
     <md-dialog-actions>
@@ -22,10 +22,11 @@
     </md-dialog-actions>
   </md-dialog>
 </template>
+
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator';
 import Component from 'vue-class-component';
-import { namespace, ProcessMedicine } from '@/store/medicine/types';
+import { namespace } from '@/store/medicine/types';
 import { MedicineMutations } from '@/store/medicine/mutations';
 import { MedicineGetters } from '@/store/medicine/getters';
 import { Medicine } from '@/entities/Medicine';
@@ -53,18 +54,26 @@ export default class CreateNewMedicine extends Vue {
       if (toLower(this.newMedicine.name) === toLower(medicine.name)) {
         newMedicine = false;
 
+        let existStock = false;
         medicine.stock.forEach((stock) => {
           if (sameDay(stock.expiredDate, this.newMedicine.expiredDate)) {
+            existStock = true;
             stock.amount += this.newMedicine.amount;
           }
         }, this);
+
+        if (!existStock) {
+          medicine.stock.push({
+            expiredDate: this.newMedicine.expiredDate,
+            amount: this.newMedicine.amount,
+          });
+        }
       }
     }, this);
 
     if (newMedicine) {
       allMedicines.push({
         name: this.newMedicine.name,
-        minExpiredDate: this.newMedicine.expiredDate,
         stock: [{
           expiredDate: this.newMedicine.expiredDate,
           amount: this.newMedicine.amount,

@@ -28,6 +28,7 @@ const actions: ActionTree<MedicineState, RootState> = {
           amount: savedStock.amount,
         });
       });
+      parsedData.push(medicine);
     });
     this.commit(
       `${namespace}/${MedicineMutations.LOADED}`,

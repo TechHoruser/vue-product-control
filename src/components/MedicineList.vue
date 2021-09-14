@@ -31,8 +31,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Medicine } from '@/entities/Medicine';
-import { MedicineState, namespace, ProcessMedicine } from '@/store/medicine/types';
+import { namespace, ProcessMedicine } from '@/store/medicine/types';
 import CreateNewMedicine from '@/components/CreateNewMedicine.vue';
 import { MedicineActions } from '@/store/medicine/actions';
 import { MedicineGetters } from '@/store/medicine/getters';
@@ -47,13 +46,14 @@ export default class MedicineList extends Vue {
 
   search = '';
 
-  searched: Medicine[] = [];
+  searched: ProcessMedicine[] = [];
 
   showDialog = false;
 
   async mounted(): Promise<void> {
     await this.$store.dispatch(`${namespace}/${MedicineActions.FETCH_DATA}`);
     this.allMedicines = this.$store.getters[`${namespace}/${MedicineGetters.GET_PROCESS_ALL}`];
+    this.searched = this.allMedicines;
   }
 
   searchOnTable(): void {
