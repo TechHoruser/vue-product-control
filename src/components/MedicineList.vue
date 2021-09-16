@@ -7,7 +7,7 @@
         </div>
 
         <md-field md-clearable class="md-toolbar-section-end">
-          <md-input placeholder="Nombre del medicamento" v-model="search" @input="searchOnTable()" />
+          <md-input placeholder="Nombre del medicamento" v-model="search" @input="searchOnTable()" required />
         </md-field>
       </md-table-toolbar>
 
@@ -19,13 +19,16 @@
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Nombre" md-sort-by="name">{{ item.name }}</md-table-cell>
-        <md-table-cell md-label="Fecha de expiración mínima" md-sort-by="minExpiredDate">
-          {{ item.minExpiredDate }}
+        <md-table-cell md-label="Fecha de expiración mínima" md-sort-by="minExpiredDate.getTime()">
+          {{ item.minExpiredDate | formatDate }}
         </md-table-cell>
       </md-table-row>
     </md-table>
 
-    <CreateNewMedicine :show-dialog="showDialog" v-on:modifyShowDialog="modifyShowDialog"/>
+    <CreateNewMedicine :show-dialog="showDialog"
+                       v-on:modifyShowDialog="modifyShowDialog"
+                       @close="showDialog = false"
+    />
   </div>
 </template>
 
@@ -67,6 +70,8 @@ export default class MedicineList extends Vue {
 
   modifyShowDialog(newValue: boolean): void {
     this.showDialog = newValue;
+    this.allMedicines = this.$store.getters[`${namespace}/${MedicineGetters.GET_PROCESS_ALL}`];
+    this.searchOnTable();
   }
 }
 </script>

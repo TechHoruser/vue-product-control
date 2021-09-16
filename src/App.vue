@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script lang="js">
+<script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
 // MATERIAL IMPORTS
@@ -21,38 +21,13 @@ import MedicineList from './components/MedicineList.vue';
 export const dateFormat = 'dd/MM/yyyy';
 
 Vue.use(VueMaterial);
-Vue.material = {
-  ...Vue.material,
-  locale: {
-    ...Vue.material.locale,
-    dateFormat,
 
-    firstDayOfAWeek: 1,
-
-    days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-    shortDays: ['Dom', 'Lun', 'Mar', 'Mir', 'Jue', 'Vie', 'Sab'],
-    shortedDays: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-    months: [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ],
-    shortMonths: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-    shorterMonths: ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-
-    startYear: 1900,
-    endYear: 2099,
-  },
-};
+Vue.filter('formatDate', (date: Date) => {
+  const year = String(date.getFullYear());
+  const month = ((date.getMonth() + 1) > 9 ? '' : '0') + (date.getMonth() + 1);
+  const day = (date.getDate() > 9 ? '' : '0') + date.getDate();
+  return `${day}/${month}/${year}`;
+});
 
 @Component({
   components: {
