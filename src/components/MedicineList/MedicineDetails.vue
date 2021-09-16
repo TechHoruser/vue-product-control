@@ -10,7 +10,7 @@
       <md-table v-model="medicine.stock" md-sort="amount" md-sort-order="asc" md-card md-fixed-header>
         <md-table-row slot="md-table-row" slot-scope="{ item }">
           <md-table-cell md-label="Fecha de caducidad" md-sort-by="expiredDate">
-            {{ item.expiredDate }}
+            {{ item.expiredDate | formatDate }}
           </md-table-cell>
           <md-table-cell md-label="Cantidad" md-sort-by="amount">{{ item.amount }}</md-table-cell>
         </md-table-row>
@@ -25,8 +25,10 @@
 
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator';
+import Component from 'vue-class-component';
 import { ProcessMedicine } from '@/store/medicine/types';
 
+@Component
 export default class MedicineDetails extends Vue {
   @Prop() showDialog: boolean;
 

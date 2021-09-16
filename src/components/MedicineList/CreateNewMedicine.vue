@@ -84,11 +84,11 @@ export default class CreateNewMedicine extends Vue {
     this.$v.newMedicine.$touch();
     if (this.$v.newMedicine.$pending || this.$v.newMedicine.$error) return;
 
-    let newMedicine = true;
+    let isNewMedicine = true;
     const allMedicines = this.$store.getters[`${namespace}/${MedicineGetters.GET_ALL}`];
     allMedicines.forEach((medicine: Medicine) => {
       if (toLower(this.newMedicine.name) === toLower(medicine.name)) {
-        newMedicine = false;
+        isNewMedicine = false;
 
         let existStock = false;
         medicine.stock.forEach((stock) => {
@@ -107,7 +107,7 @@ export default class CreateNewMedicine extends Vue {
       }
     }, this);
 
-    if (newMedicine) {
+    if (isNewMedicine) {
       allMedicines.push({
         name: this.newMedicine.name,
         stock: [{

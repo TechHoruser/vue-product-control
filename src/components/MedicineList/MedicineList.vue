@@ -31,7 +31,6 @@
     />
 
     <MedicineDetails
-      v-if="selectedMedicine"
       :show-dialog="showMedicineDetailsDialog"
       :medicine="selectedMedicine"
       v-on:hideDialog="hideMedicineDetailsDialog"
@@ -42,9 +41,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { namespace, ProcessMedicine } from '@/store/medicine/types';
-import CreateNewMedicine from '@/components/MedicineList/CreateNewMedicine.vue';
 import { MedicineActions } from '@/store/medicine/actions';
 import { MedicineGetters } from '@/store/medicine/getters';
+import CreateNewMedicine from '@/components/MedicineList/CreateNewMedicine.vue';
 import MedicineDetails from '@/components/MedicineList/MedicineDetails.vue';
 
 const toLower = (text: string) => text.toString().toLowerCase();
@@ -63,7 +62,11 @@ export default class MedicineList extends Vue {
 
   showMedicineDetailsDialog = false;
 
-  selectedMedicine: ProcessMedicine = null;
+  selectedMedicine: ProcessMedicine = {
+    name: '',
+    minExpiredDate: new Date(),
+    stock: [],
+  };
 
   async mounted(): Promise<void> {
     await this.$store.dispatch(`${namespace}/${MedicineActions.FETCH_DATA}`);
