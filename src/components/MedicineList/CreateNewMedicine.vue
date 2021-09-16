@@ -1,27 +1,43 @@
 <template lang="html">
-  <md-dialog id="create-dialog" :md-active.sync="showDialog">
+  <md-dialog id="create-dialog"
+             :md-active.sync="showDialog"
+             :md-close-on-esc="false"
+             :md-click-outside-to-close="false"
+  >
     <md-dialog-title>Nuevo medicamento</md-dialog-title>
 
-    <md-field>
+    <md-field :class="{ 'md-invalid': $v.newMedicine.name.$error }">
       <label>Nombre</label>
-      <md-input v-model="newMedicine.name" required
-                :error-messages="nameErrors"
-                @input="$v.newMedicine.name.$touch()"
-                @blur="$v.newMedicine.name.$touch()"></md-input>
+      <md-input v-model.trim="newMedicine.name" required></md-input>
+      <span class="md-error" v-if="!$v.newMedicine.name.required">
+        Debe introducir el nombre del medicamento.
+      </span>
     </md-field>
 
-    <md-datepicker v-model="newMedicine.expiredDate" required>
+    <md-datepicker :class="{ 'md-invalid': $v.newMedicine.expiredDate.$error }"
+                   v-model="newMedicine.expiredDate"
+                   required
+    >
       <label>Fecha de caducidad</label>
+      <span class="md-error" v-if="!$v.newMedicine.expiredDate.required">
+        Debe introducir la fecha de caducidad.
+      </span>
     </md-datepicker>
 
-    <md-field>
+    <md-field :class="{ 'md-invalid': $v.newMedicine.amount.$error }">
       <label>Cantidad</label>
       <md-input v-model.number="newMedicine.amount" type="number" required></md-input>
+      <span class="md-error" v-if="!$v.newMedicine.amount.required">
+        Debe introducir la cantidad de medicamentos.
+      </span>
+      <span class="md-error" v-if="!$v.newMedicine.amount.minValue">
+        La cantidad del medicamento debe ser positiva.
+      </span>
     </md-field>
 
     <md-dialog-actions>
-      <md-button class="md-primary" @click="hideDialog">Close</md-button>
-      <md-button class="md-primary" @click="createNewMedicine">Save</md-button>
+      <md-button class="md-primary" @click="hideDialog">Cerrar</md-button>
+      <md-button class="md-primary md-raised" @click="createNewMedicine">Registrar</md-button>
     </md-dialog-actions>
   </md-dialog>
 </template>
@@ -59,12 +75,15 @@ export default class CreateNewMedicine extends Vue {
   @Prop() showDialog = false;
 
   newMedicine = {
-    name: '',
-    expiredDate: new Date(),
-    amount: 1,
+    name: null,
+    expiredDate: null,
+    amount: null,
   };
 
-  createNewMedicine = (): void => {
+  createNewMedicine(): void {
+    this.$v.newMedicine.$touch();
+    if (this.$v.newMedicine.$pending || this.$v.newMedicine.$error) return;
+
     let newMedicine = true;
     const allMedicines = this.$store.getters[`${namespace}/${MedicineGetters.GET_ALL}`];
     allMedicines.forEach((medicine: Medicine) => {
@@ -102,19 +121,7 @@ export default class CreateNewMedicine extends Vue {
   }
 
   hideDialog(): void {
-    this.$emit('modifyShowDialog', false);
-  }
-
-  get nameErrors(): string[] {
-    const errors: string[] = [];
-    if (!this.$v.newMedicine.name?.required) errors.push('Se requiere el nombre del medicamento.');
-    return errors;
+    this.$emit('hideDialog');
   }
 }
 </script>
-
-<style lang="scss">
-#create-dialog .md-dialog-container {
-  padding: 3em;
-}
-</style>

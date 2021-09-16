@@ -16,7 +16,7 @@ import Alerts from './components/Alerts.vue';
 import Home from './components/Home.vue';
 import Config from './components/Config.vue';
 import RegisterUse from './components/RegisterUse.vue';
-import MedicineList from './components/MedicineList.vue';
+import MedicineList from './components/MedicineList/MedicineList.vue';
 
 export const dateFormat = 'dd/MM/yyyy';
 
@@ -42,6 +42,14 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
+@import "~vue-material/dist/theme/engine";
+@include md-register-theme("default", (
+  primary: #7070ec,
+  accent: #9c9c9c,
+));
+
+@import "~vue-material/dist/theme/all";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -62,5 +70,10 @@ export default class App extends Vue {}
       color: #42b983;
     }
   }
+}
+
+#create-dialog .md-dialog-container {
+  padding: 3em;
+  overflow-y: scroll;
 }
 </style>

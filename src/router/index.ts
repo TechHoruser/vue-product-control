@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../components/Home.vue';
 import Alerts from '../components/Alerts.vue';
-import MedicineList from '../components/MedicineList.vue';
+import MedicineList from '../components/MedicineList/MedicineList.vue';
 import Config from '../components/Config.vue';
 import RegisterUse from '../components/RegisterUse.vue';
 
