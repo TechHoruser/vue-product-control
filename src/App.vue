@@ -72,8 +72,18 @@ export default class App extends Vue {}
   }
 }
 
-#create-dialog .md-dialog-container {
-  padding: 3em;
-  overflow-y: scroll;
+.md-dialog {
+  .md-dialog-container {
+    padding: 2em;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .md-dialog-content {
+    overflow: unset;
+  }
 }
 </style>

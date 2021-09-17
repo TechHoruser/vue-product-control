@@ -72,7 +72,7 @@ const sameDay = (d1: Date, d2: Date) => d1.getFullYear() === d2.getFullYear()
   },
 })
 export default class CreateNewMedicine extends Vue {
-  @Prop() showDialog = false;
+  @Prop() showDialog: boolean;
 
   newMedicine = {
     name: null,

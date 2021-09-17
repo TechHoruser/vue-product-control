@@ -19,7 +19,7 @@
 
       <md-table-row slot="md-table-row" slot-scope="{ item }" @click="showMedicineDetailsDialogMethod(item)">
         <md-table-cell md-label="Nombre" md-sort-by="name">{{ item.name }}</md-table-cell>
-        <md-table-cell md-label="Fecha de expiración mínima" md-sort-by="minExpiredDate.getTime()">
+        <md-table-cell md-label="Fecha de expiración mínima" md-sort-by="minExpiredDate | formatOrderDate">
           {{ item.minExpiredDate | formatDate }}
         </md-table-cell>
       </md-table-row>
@@ -101,7 +101,7 @@ export default class MedicineList extends Vue {
 </script>
 
 <style>
-md-toolbar {
-  margin-bottom: 10px;
-}
+  md-toolbar {
+    margin-bottom: 10px;
+  }
 </style>
