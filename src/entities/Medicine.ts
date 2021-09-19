@@ -1,4 +1,4 @@
-interface Stock {
+export interface Stock {
   expiredDate: Date,
   amount: number,
 }

@@ -14,23 +14,6 @@
         </md-ripple>
       </md-card>
     </router-link>
-    <router-link class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100" to="/register-use">
-      <md-card class="md-primary" md-theme="purple-card" md-with-hover>
-        <md-ripple>
-          <md-card-header>
-            <div class="md-title">Registrar Uso</div>
-            <div class="md-subhead">
-                Descontar al stock existente al hacer uso de un medicamento.
-            </div>
-          </md-card-header>
-
-          <md-card-content>
-            Podrá detallar que medicamento ha usado.
-            (Tenga en cuenta ver la fecha de caducidad del mismo para descontarlo al stock adecuado)
-          </md-card-content>
-        </md-ripple>
-      </md-card>
-    </router-link>
     <router-link class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100" to="/config">
       <md-card class="md-primary" md-theme="purple-card" md-with-hover>
         <md-ripple>

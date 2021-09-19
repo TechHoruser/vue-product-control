@@ -4,7 +4,6 @@ import Home from '../components/Home.vue';
 import Alerts from '../components/Alerts.vue';
 import MedicineList from '../components/MedicineList/MedicineList.vue';
 import Config from '../components/Config.vue';
-import RegisterUse from '../components/RegisterUse.vue';
 
 Vue.use(VueRouter);
 
@@ -28,11 +27,6 @@ const routes: Array<RouteConfig> = [
     path: '/config',
     name: 'Config',
     component: Config,
-  },
-  {
-    path: '/register-use',
-    name: 'RegisterUse',
-    component: RegisterUse,
   },
 ];
 

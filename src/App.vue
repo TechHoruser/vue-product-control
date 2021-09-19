@@ -12,12 +12,6 @@ import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
-import Alerts from './components/Alerts.vue';
-import Home from './components/Home.vue';
-import Config from './components/Config.vue';
-import RegisterUse from './components/RegisterUse.vue';
-import MedicineList from './components/MedicineList/MedicineList.vue';
-
 export const dateFormat = 'dd/MM/yyyy';
 
 Vue.use(VueMaterial);
@@ -29,15 +23,7 @@ Vue.filter('formatDate', (date: Date) => {
   return `${day}/${month}/${year}`;
 });
 
-@Component({
-  components: {
-    Home,
-    Alerts,
-    Config,
-    RegisterUse,
-    MedicineList,
-  },
-})
+@Component
 export default class App extends Vue {}
 </script>
 
