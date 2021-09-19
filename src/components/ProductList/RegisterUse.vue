@@ -66,12 +66,17 @@ export default class RegisterUse extends Vue {
     this.$emit('hideDialog');
   }
 
+  goToProductList(): void {
+    this.$emit('goToProductList');
+  }
+
   registerUse(): void {
     this.$v.amount.$touch();
     if (this.$v.amount.$pending || this.$v.amount.$error) return;
 
     const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL}`];
     let errorAmount = false;
+    let goToProductList = false;
     allProducts.forEach((product: Product, productIndex, productObject) => {
       if (toLower(this.product.name) === toLower(product.name)) {
         product.stock.forEach((stock, stockIndex, stockObject) => {
@@ -86,6 +91,7 @@ export default class RegisterUse extends Vue {
         }, this);
         if (product.stock.length === 0) {
           productObject.splice(productIndex, 1);
+          goToProductList = true;
         }
       }
     }, this);
@@ -96,7 +102,12 @@ export default class RegisterUse extends Vue {
     }
 
     this.$store.commit(`${namespace}/${ProductMutations.LOADED}`, allProducts);
-    this.hideDialog();
+
+    if (goToProductList) {
+      this.goToProductList();
+    } else {
+      this.hideDialog();
+    }
   }
 
   addAmount(): void {

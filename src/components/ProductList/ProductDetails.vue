@@ -32,6 +32,7 @@
       :selected-stock="selectedStock"
       :product="product"
       v-on:hideDialog="hideRegisterUseDialog"
+      v-on:goToProductList="hideRegisterUseDialogAndGoToProductList"
     />
   </md-dialog>
 </template>
@@ -79,6 +80,11 @@ export default class ProductDetails extends Vue {
   hideRegisterUseDialog(): void {
     this.$emit('refreshItems');
     this.showRegisterUseDialog = false;
+  }
+
+  hideRegisterUseDialogAndGoToProductList(): void {
+    this.hideRegisterUseDialog();
+    this.hideDialog();
   }
 }
 
