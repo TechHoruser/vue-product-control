@@ -7,7 +7,7 @@
   >
     <md-dialog-title>Registrar uso</md-dialog-title>
     <md-dialog-content>
-      <p><strong>Nombre del medicamento:</strong> {{ medicine.name }}</p>
+      <p><strong>Nombre del producto:</strong> {{ product.name }}</p>
       <p><strong>Fecha de caducidad:</strong> {{ selectedStock.expiredDate | formatDate }}</p>
     </md-dialog-content>
 
@@ -18,10 +18,10 @@
         Debe introducir la cantidad de medicamentos.
       </span>
       <span class="md-error" v-if="!$v.amount.minValue">
-        La cantidad del medicamento debe ser positiva.
+        La cantidad del producto debe ser positiva.
       </span>
       <span class="md-error" v-if="!$v.amount.maxValue">
-        La cantidad del medicamento es mayor a la registrada en el sistema.
+        La cantidad del producto es mayor a la registrada en el sistema.
       </span>
     </md-field>
 
@@ -37,10 +37,10 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { validationMixin } from 'vuelidate';
 import { maxValue, minValue, required } from 'vuelidate/lib/validators';
-import { Medicine, Stock } from '@/entities/Medicine';
-import { namespace, ProcessMedicine } from '@/store/medicine/types';
-import { MedicineGetters } from '@/store/medicine/getters';
-import { MedicineMutations } from '@/store/medicine/mutations';
+import { Product, Stock } from '@/entities/Product';
+import { namespace, ProcessProduct } from '@/store/product/types';
+import { ProductGetters } from '@/store/product/getters';
+import { ProductMutations } from '@/store/product/mutations';
 import { sameDay, toLower } from '@/Helpers';
 
 @Component({
@@ -56,7 +56,7 @@ import { sameDay, toLower } from '@/Helpers';
 export default class RegisterUse extends Vue {
   @Prop() showDialog: boolean;
 
-  @Prop() medicine: ProcessMedicine;
+  @Prop() product: ProcessProduct;
 
   @Prop() selectedStock: Stock;
 
@@ -70,11 +70,11 @@ export default class RegisterUse extends Vue {
     this.$v.amount.$touch();
     if (this.$v.amount.$pending || this.$v.amount.$error) return;
 
-    const allMedicines = this.$store.getters[`${namespace}/${MedicineGetters.GET_ALL}`];
+    const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL}`];
     let errorAmount = false;
-    allMedicines.forEach((medicine: Medicine, medicineIndex, medicineObject) => {
-      if (toLower(this.medicine.name) === toLower(medicine.name)) {
-        medicine.stock.forEach((stock, stockIndex, stockObject) => {
+    allProducts.forEach((product: Product, productIndex, productObject) => {
+      if (toLower(this.product.name) === toLower(product.name)) {
+        product.stock.forEach((stock, stockIndex, stockObject) => {
           if (sameDay(stock.expiredDate, this.selectedStock.expiredDate)) {
             stock.amount -= this.amount;
             if (stock.amount < 0) {
@@ -84,8 +84,8 @@ export default class RegisterUse extends Vue {
             }
           }
         }, this);
-        if (medicine.stock.length === 0) {
-          medicineObject.splice(medicineIndex, 1);
+        if (product.stock.length === 0) {
+          productObject.splice(productIndex, 1);
         }
       }
     }, this);
@@ -95,7 +95,7 @@ export default class RegisterUse extends Vue {
       return;
     }
 
-    this.$store.commit(`${namespace}/${MedicineMutations.LOADED}`, allMedicines);
+    this.$store.commit(`${namespace}/${ProductMutations.LOADED}`, allProducts);
     this.hideDialog();
   }
 
@@ -103,10 +103,10 @@ export default class RegisterUse extends Vue {
     this.$v.amount.$touch();
     if (this.$v.amount.$pending || this.$v.amount.$error) return;
 
-    const allMedicines = this.$store.getters[`${namespace}/${MedicineGetters.GET_ALL}`];
-    allMedicines.forEach((medicine: Medicine) => {
-      if (toLower(this.medicine.name) === toLower(medicine.name)) {
-        medicine.stock.forEach((stock) => {
+    const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL}`];
+    allProducts.forEach((product: Product) => {
+      if (toLower(this.product.name) === toLower(product.name)) {
+        product.stock.forEach((stock) => {
           if (sameDay(stock.expiredDate, this.selectedStock.expiredDate)) {
             stock.amount += this.amount;
           }
@@ -114,7 +114,7 @@ export default class RegisterUse extends Vue {
       }
     }, this);
 
-    this.$store.commit(`${namespace}/${MedicineMutations.LOADED}`, allMedicines);
+    this.$store.commit(`${namespace}/${ProductMutations.LOADED}`, allProducts);
     this.hideDialog();
   }
 }

@@ -3,7 +3,7 @@ export interface Stock {
   amount: number,
 }
 
-export interface Medicine {
+export interface Product {
   name: string,
   stock: Stock[],
 }

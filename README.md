@@ -1,4 +1,4 @@
-# medicine-control
+# product-control
 
 ## Project setup
 ```

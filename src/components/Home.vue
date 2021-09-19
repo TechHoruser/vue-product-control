@@ -1,15 +1,15 @@
 <template>
   <div id="home" class="md-layout md-gutter md-alignment-center">
-    <router-link class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100" to="/medicine-list">
+    <router-link class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100" to="/product-list">
       <md-card class="md-primary" md-theme="purple-card" md-with-hover>
         <md-ripple>
           <md-card-header>
-            <div class="md-title">Listado de Medicamentos</div>
-            <div class="md-subhead">Ver listado de medicamentos.</div>
+            <div class="md-title">Listado de Productos</div>
+            <div class="md-subhead">Ver listado de Productos.</div>
           </md-card-header>
 
           <md-card-content>
-            Podrá ver los medicamentos registrados en el sistema y modificar su información.
+            Podrá ver los productos registrados en el sistema y modificar su información.
           </md-card-content>
         </md-ripple>
       </md-card>
@@ -33,7 +33,7 @@
           </md-card-header>
 
           <md-card-content>
-            Consulte aquí si existe algún medicamento que puede caducar o haber caducado.
+            Consulte aquí si existe algún producto que puede caducar o haber caducado.
           </md-card-content>
         </md-ripple>
       </md-card>

@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../components/Home.vue';
 import Alerts from '../components/Alerts.vue';
-import MedicineList from '../components/MedicineList/MedicineList.vue';
+import ProductList from '../components/ProductList/ProductList.vue';
 import Config from '../components/Config.vue';
 
 Vue.use(VueRouter);
@@ -14,9 +14,9 @@ const routes: Array<RouteConfig> = [
     component: Home,
   },
   {
-    path: '/medicine-list',
-    name: 'MedicineList',
-    component: MedicineList,
+    path: '/product-list',
+    name: 'ProductList',
+    component: ProductList,
   },
   {
     path: '/alerts',

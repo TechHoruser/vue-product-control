@@ -1,13 +1,13 @@
 <template lang="html">
-  <md-dialog id="medicine-details-dialog"
+  <md-dialog id="product-details-dialog"
              :md-active.sync="showDialog"
              :md-close-on-esc="false"
              :md-click-outside-to-close="false"
   >
-    <md-dialog-title>Stock del Medicamento</md-dialog-title>
+    <md-dialog-title>Stock del Producto</md-dialog-title>
 
     <md-dialog-content>
-      <md-table v-model="medicine.stock"
+      <md-table v-model="product.stock"
                 :md-sort.sync="currentSort"
                 :md-sort-order.sync="currentSortOrder"
                 :md-sort-fn="customSort"
@@ -30,7 +30,7 @@
     <RegisterUse
       :show-dialog="showRegisterUseDialog"
       :selected-stock="selectedStock"
-      :medicine="medicine"
+      :product="product"
       v-on:hideDialog="hideRegisterUseDialog"
     />
   </md-dialog>
@@ -39,18 +39,18 @@
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator';
 import Component from 'vue-class-component';
-import { Stock } from '@/entities/Medicine';
-import { ProcessMedicine } from '@/store/medicine/types';
-import RegisterUse from '@/components/MedicineList/RegisterUse.vue';
+import { Stock } from '@/entities/Product';
+import { ProcessProduct } from '@/store/product/types';
+import RegisterUse from '@/components/ProductList/RegisterUse.vue';
 import { customSort } from '@/Helpers';
 
 @Component({
   components: { RegisterUse },
 })
-export default class MedicineDetails extends Vue {
+export default class ProductDetails extends Vue {
   @Prop() showDialog: boolean;
 
-  @Prop() medicine: ProcessMedicine;
+  @Prop() product: ProcessProduct;
 
   showRegisterUseDialog = false;
 
