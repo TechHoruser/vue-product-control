@@ -1,6 +1,5 @@
 <template lang="html">
   <md-dialog id="create-dialog"
-             v-if="selectedStock !== undefined"
              :md-active.sync="showDialog"
              :md-close-on-esc="false"
              :md-click-outside-to-close="false"
@@ -47,7 +46,9 @@ import { sameDay, toLower } from '@/Helpers';
     amount: {
       required,
       minValue: minValue(1),
-      // maxValue: maxValue(this.selectedStock.amount),
+      maxValue(value) {
+        return maxValue(this.selectedStock.amount)(value);
+      },
     },
   },
 })
@@ -79,11 +80,13 @@ export default class RegisterUse extends Vue {
       if (toLower(this.product.name) === toLower(product.name)) {
         product.stock.forEach((stock, stockIndex, stockObject) => {
           if (sameDay(stock.expiredDate, this.selectedStock.expiredDate)) {
-            stock.amount -= this.amount;
-            if (stock.amount < 0) {
+            const newAmount = stock.amount - this.amount;
+            if (newAmount < 0) {
               errorAmount = true;
-            } else if (stock.amount === 0) {
+            } else if (newAmount === 0) {
               stockObject.splice(stockIndex, 1);
+            } else {
+              stock.amount = newAmount;
             }
           }
         }, this);
