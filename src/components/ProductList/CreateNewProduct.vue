@@ -45,7 +45,6 @@
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator';
 import Component from 'vue-class-component';
-import { validationMixin } from 'vuelidate';
 import { required, minValue } from 'vuelidate/lib/validators';
 import { namespace } from '@/store/product/types';
 import { ProductMutations } from '@/store/product/mutations';
@@ -54,7 +53,6 @@ import { Product } from '@/entities/Product';
 import { sameDay, toLower } from '@/Helpers';
 
 @Component({
-  mixins: [validationMixin],
   validations: {
     newProduct: {
       name: { required },
