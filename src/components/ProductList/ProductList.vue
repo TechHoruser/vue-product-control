@@ -20,10 +20,10 @@
               md-card
               md-fixed-header
     >
-      <md-table-empty-state v-if="search === ''" md-label="Sin medicamentos"/>
+      <md-table-empty-state v-if="search === ''" md-label="Sin productos"/>
       <md-table-empty-state v-else
-        md-label="Sin medicamentos"
-        :md-description="`No se han encontrado medicamentos para '${search}'`">
+        md-label="Sin productos"
+        :md-description="`No se han encontrado productos para '${search}'`">
       </md-table-empty-state>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }" @click="showProductDetailsDialogMethod(item)">

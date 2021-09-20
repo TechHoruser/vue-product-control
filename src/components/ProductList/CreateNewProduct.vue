@@ -28,7 +28,7 @@
       <label>Cantidad</label>
       <md-input v-model.number="newProduct.amount" type="number" required></md-input>
       <span class="md-error" v-if="!$v.newProduct.amount.required">
-        Debe introducir la cantidad de medicamentos.
+        Debe introducir la cantidad de productos.
       </span>
       <span class="md-error" v-if="!$v.newProduct.amount.minValue">
         La cantidad del producto debe ser positiva.
