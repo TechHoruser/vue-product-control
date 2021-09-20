@@ -3,10 +3,11 @@ import getters from './getters';
 import actions from './actions';
 import mutations from './mutations';
 import { RootState } from '../types';
-import { LocalStorageProducts, ProductState } from '@/store/product/types';
+import { DaysForExpirationAlert, LocalStorageProducts, ProductState } from '@/store/product/types';
 
 const state: ProductState = {
   products: JSON.parse(window.localStorage.getItem(LocalStorageProducts) ?? '[]'),
+  daysForExpirationAlert: Number(window.localStorage.getItem(DaysForExpirationAlert) ?? 7),
 };
 
 const namespaced = true;

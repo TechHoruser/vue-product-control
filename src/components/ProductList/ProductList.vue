@@ -85,7 +85,7 @@ export default class ProductList extends Vue {
 
   async mounted(): Promise<void> {
     await this.$store.dispatch(`${namespace}/${ProductActions.FETCH_DATA}`);
-    this.allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_PROCESS_ALL}`];
+    this.allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL_PROCESSED_PRODUCTS}`];
     this.searched = this.allProducts;
   }
 
@@ -117,7 +117,7 @@ export default class ProductList extends Vue {
   }
 
   refreshItems(): void {
-    this.allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_PROCESS_ALL}`];
+    this.allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL_PROCESSED_PRODUCTS}`];
     if (this.selectedProduct.name !== '') {
       this.allProducts.forEach((item) => {
         if (item.name === this.selectedProduct.name) {

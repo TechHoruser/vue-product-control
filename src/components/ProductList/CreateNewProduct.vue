@@ -78,7 +78,7 @@ export default class CreateNewProduct extends Vue {
     if (this.$v.newProduct.$pending || this.$v.newProduct.$error) return;
 
     let isNewProduct = true;
-    const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL}`];
+    const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL_PRODUCTS}`];
     allProducts.forEach((product: Product) => {
       if (toLower(this.newProduct.name) === toLower(product.name)) {
         isNewProduct = false;
@@ -109,7 +109,7 @@ export default class CreateNewProduct extends Vue {
         }],
       });
     }
-    this.$store.commit(`${namespace}/${ProductMutations.LOADED}`, allProducts);
+    this.$store.commit(`${namespace}/${ProductMutations.LOAD_PRODUCTS}`, allProducts);
     this.hideDialog();
   }
 

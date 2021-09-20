@@ -1,15 +1,20 @@
 import { MutationTree } from 'vuex';
-import { LocalStorageProducts, ProductState } from '@/store/product/types';
+import { DaysForExpirationAlert, LocalStorageProducts, ProductState } from '@/store/product/types';
 import { Product } from '@/entities/Product';
 
 export enum ProductMutations {
-  LOADED = 'productsLoaded',
+  LOAD_PRODUCTS = 'productsLoaded',
+  LOAD_DAYS_FOR_EXPIRATION_ALERT = 'daysForExpirationAlert',
 }
 
 const mutations: MutationTree<ProductState> = {
-  [ProductMutations.LOADED](state, payload: Product[]) {
+  [ProductMutations.LOAD_PRODUCTS](state, payload: Product[]) {
     state.products = payload;
     window.localStorage.setItem(LocalStorageProducts, JSON.stringify(payload));
+  },
+  [ProductMutations.LOAD_DAYS_FOR_EXPIRATION_ALERT](state, payload: number) {
+    state.daysForExpirationAlert = payload;
+    window.localStorage.setItem(DaysForExpirationAlert, String(payload));
   },
 };
 

@@ -4,12 +4,13 @@ import { RootState } from '@/store/types';
 import { Product } from '@/entities/Product';
 
 export const enum ProductGetters{
-  GET_PROCESS_ALL = 'processAll',
-  GET_ALL = 'all',
+  GET_ALL_PROCESSED_PRODUCTS = 'getAllProcessedProducts',
+  GET_ALL_PRODUCTS = 'getAllProducts',
+  GET_DAYS_FOR_EXPIRATION_ALERT = 'getDaysForExpirationAlert',
 }
 
 const getters: GetterTree<ProductState, RootState> = {
-  [ProductGetters.GET_PROCESS_ALL](state: ProductState): ProcessProduct[] {
+  [ProductGetters.GET_ALL_PROCESSED_PRODUCTS](state: ProductState): ProcessProduct[] {
     const processProducts: ProcessProduct[] = [];
     state.products.forEach((product) => {
       const processProduct: ProcessProduct = {
@@ -27,7 +28,7 @@ const getters: GetterTree<ProductState, RootState> = {
     });
     return processProducts;
   },
-  [ProductGetters.GET_ALL](state: ProductState): Product[] {
+  [ProductGetters.GET_ALL_PRODUCTS](state: ProductState): Product[] {
     const processProducts: Product[] = [];
     state.products.forEach((product) => {
       const processProduct: Product = {
@@ -40,6 +41,9 @@ const getters: GetterTree<ProductState, RootState> = {
       processProducts.push(processProduct);
     });
     return processProducts;
+  },
+  [ProductGetters.GET_DAYS_FOR_EXPIRATION_ALERT](state: ProductState): number {
+    return state.daysForExpirationAlert;
   },
 };
 

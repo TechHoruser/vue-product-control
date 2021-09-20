@@ -16,8 +16,12 @@ export interface ProductSavedInStorage {
 
 export const namespace = 'product';
 
-export const LocalStorageProducts = 'MEDICINE-CONTROL-DATA';
+export const LocalStorageProducts = 'PRODUCTS-DATA';
+export const DaysForExpirationAlert = 'DAYS-FOR-EXPIRATION-ALERT';
+
+export const DefaultDaysForExpirationAlert = 7;
 
 export interface ProductState {
   products: Product[];
+  daysForExpirationAlert: number,
 }

@@ -73,7 +73,7 @@ export default class RegisterUse extends Vue {
     this.$v.amount.$touch();
     if (this.$v.amount.$pending || this.$v.amount.$error) return;
 
-    const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL}`];
+    const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL_PRODUCTS}`];
     let errorAmount = false;
     let goToProductList = false;
     allProducts.forEach((product: Product, productIndex, productObject) => {
@@ -102,7 +102,7 @@ export default class RegisterUse extends Vue {
       return;
     }
 
-    this.$store.commit(`${namespace}/${ProductMutations.LOADED}`, allProducts);
+    this.$store.commit(`${namespace}/${ProductMutations.LOAD_PRODUCTS}`, allProducts);
 
     if (goToProductList) {
       this.goToProductList();
@@ -115,7 +115,7 @@ export default class RegisterUse extends Vue {
     this.$v.amount.$touch();
     if (this.$v.amount.$pending || this.$v.amount.$error) return;
 
-    const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL}`];
+    const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL_PRODUCTS}`];
     allProducts.forEach((product: Product) => {
       if (toLower(this.product.name) === toLower(product.name)) {
         product.stock.forEach((stock) => {
@@ -126,7 +126,7 @@ export default class RegisterUse extends Vue {
       }
     }, this);
 
-    this.$store.commit(`${namespace}/${ProductMutations.LOADED}`, allProducts);
+    this.$store.commit(`${namespace}/${ProductMutations.LOAD_PRODUCTS}`, allProducts);
     this.hideDialog();
   }
 }

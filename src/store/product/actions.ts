@@ -3,7 +3,7 @@ import {
   LocalStorageProducts,
   ProductSavedInStorage,
   ProductState,
-  namespace, ProcessProduct,
+  namespace, ProcessProduct, DaysForExpirationAlert, DefaultDaysForExpirationAlert,
 } from '@/store/product/types';
 import { ProductMutations } from '@/store/product/mutations';
 import { RootState } from '@/store/types';
@@ -31,8 +31,12 @@ const actions: ActionTree<ProductState, RootState> = {
       parsedData.push(product);
     });
     this.commit(
-      `${namespace}/${ProductMutations.LOADED}`,
+      `${namespace}/${ProductMutations.LOAD_PRODUCTS}`,
       parsedData,
+    );
+    this.commit(
+      `${namespace}/${ProductMutations.LOAD_DAYS_FOR_EXPIRATION_ALERT}`,
+      Number(window.localStorage.getItem(DaysForExpirationAlert) ?? DefaultDaysForExpirationAlert),
     );
   },
 };
