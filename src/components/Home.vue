@@ -24,7 +24,8 @@
         </md-ripple>
       </md-card>
     </router-link>
-    <router-link class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100" to="/alerts">
+    <router-link class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100"
+                 to="/product-list?alerts=true">
       <md-card class="md-primary" md-with-hover>
         <md-ripple>
           <md-card-header>

@@ -1,7 +1,13 @@
-import { Product } from '@/entities/Product';
+import { Product, Stock } from '@/entities/Product';
+
+export interface ProcessStock extends Stock {
+  alert: number,
+}
 
 export interface ProcessProduct extends Product {
+  stock: ProcessStock[],
   minExpiredDate: Date,
+  alerts: number[],
 }
 
 export interface StockSavedInStorage {

@@ -13,11 +13,13 @@ import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
 import Vuelidate from 'vuelidate';
+import VueRouter from 'vue-router';
 
 export const dateFormat = 'dd/MM/yyyy';
 
 Vue.use(VueMaterial);
 Vue.use(Vuelidate);
+Vue.use(VueRouter);
 
 Vue.filter('formatDate', (date: Date) => {
   const year = String(date.getFullYear());

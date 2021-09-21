@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../components/Home.vue';
-import Alerts from '../components/Alerts.vue';
 import ProductList from '../components/ProductList/ProductList.vue';
 import Config from '../components/Config.vue';
 
@@ -17,11 +16,6 @@ const routes: Array<RouteConfig> = [
     path: '/product-list',
     name: 'ProductList',
     component: ProductList,
-  },
-  {
-    path: '/alerts',
-    name: 'Alerts',
-    component: Alerts,
   },
   {
     path: '/config',

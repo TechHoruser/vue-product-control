@@ -31,6 +31,10 @@
         <md-table-cell md-label="Fecha de expiración mínima" md-sort-by="minExpiredDate">
           {{ item.minExpiredDate | formatDate }}
         </md-table-cell>
+        <md-table-cell md-label="Alertas" class="alert-column">
+          <md-badge v-if="item.alerts.indexOf(2) > -1" class="badge-error"></md-badge>
+          <md-badge v-if="item.alerts.indexOf(1) > -1" class="badge-warning"></md-badge>
+        </md-table-cell>
       </md-table-row>
     </md-table>
 
@@ -87,6 +91,7 @@ export default class ProductList extends Vue {
     await this.$store.dispatch(`${namespace}/${ProductActions.FETCH_DATA}`);
     this.allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL_PROCESSED_PRODUCTS}`];
     this.searched = this.allProducts;
+    this.checkAlerts();
   }
 
   searchOnTable(): void {
@@ -94,6 +99,24 @@ export default class ProductList extends Vue {
     this.allProducts.forEach((productToFilter) => {
       if (toLower(productToFilter.name).includes(toLower(this.search))) {
         this.searched.push(productToFilter);
+      }
+    });
+    this.checkAlerts();
+  }
+
+  checkAlerts(): void {
+    if (!this.$route.query.alerts) {
+      return;
+    }
+
+    this.searched.forEach((product, productIndex, productObject) => {
+      product.stock.forEach((stock, stockIndex, stockObject) => {
+        if (stock.alert === 0) {
+          stockObject.splice(stockIndex, 1);
+        }
+      });
+      if (product.stock.length === 0) {
+        productObject.splice(productIndex, 1);
       }
     });
   }
@@ -130,8 +153,33 @@ export default class ProductList extends Vue {
 }
 </script>
 
-<style>
+<style lang="scss">
   md-toolbar {
     margin-bottom: 10px;
+  }
+
+  .md-badge {
+    margin: 1rem;
+    height: 1rem;
+    width: 1rem;
+    position: relative;
+
+    &.badge-error {
+      background-color: #f34848;
+    }
+    &.badge-warning {
+      background-color: #e7ca60;
+    }
+  }
+
+  .alert-column {
+    display: flex;
+    flex-direction: row-reverse;
+
+    &>* {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 </style>
