@@ -81,6 +81,7 @@ export default class ProductList extends Vue {
     name: '',
     minExpiredDate: new Date(),
     stock: [],
+    alerts: [],
   };
 
   currentSort = 'amount';

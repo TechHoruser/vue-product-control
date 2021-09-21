@@ -65,12 +65,12 @@ import { sameDay, toLower } from '@/Helpers';
   },
 })
 export default class CreateNewProduct extends Vue {
-  @Prop() showDialog: boolean;
+  @Prop() showDialog!: boolean;
 
   newProduct = {
-    name: null,
-    expiredDate: null,
-    amount: null,
+    name: '',
+    expiredDate: new Date(),
+    amount: 1,
   };
 
   createNewProduct(): void {

@@ -53,11 +53,11 @@ import { sameDay, toLower } from '@/Helpers';
   },
 })
 export default class RegisterUse extends Vue {
-  @Prop() showDialog: boolean;
+  @Prop() showDialog!: boolean;
 
-  @Prop() product: ProcessProduct;
+  @Prop() product!: ProcessProduct;
 
-  @Prop() selectedStock: Stock;
+  @Prop() selectedStock!: Stock;
 
   amount = 1;
 
@@ -76,7 +76,7 @@ export default class RegisterUse extends Vue {
     const allProducts = this.$store.getters[`${namespace}/${ProductGetters.GET_ALL_PRODUCTS}`];
     let errorAmount = false;
     let goToProductList = false;
-    allProducts.forEach((product: Product, productIndex, productObject) => {
+    allProducts.forEach((product: Product, productIndex: any, productObject: any) => {
       if (toLower(this.product.name) === toLower(product.name)) {
         product.stock.forEach((stock, stockIndex, stockObject) => {
           if (sameDay(stock.expiredDate, this.selectedStock.expiredDate)) {
@@ -98,7 +98,6 @@ export default class RegisterUse extends Vue {
     }, this);
 
     if (errorAmount) {
-      // TODO: add error maxValue to amount field like maxValue(this.selectedStock.amount)
       return;
     }
 

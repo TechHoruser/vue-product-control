@@ -49,9 +49,9 @@ import { customSort } from '@/Helpers';
   components: { RegisterUse },
 })
 export default class ProductDetails extends Vue {
-  @Prop() showDialog: boolean;
+  @Prop() showDialog!: boolean;
 
-  @Prop() product: ProcessProduct;
+  @Prop() product!: ProcessProduct;
 
   showRegisterUseDialog = false;
 
